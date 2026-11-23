@@ -36,15 +36,34 @@
     color: var(--ink);
     font: 400 clamp(14px, 3.75vw, 17.5px)/2 "Courier Prime", "Courier New", Courier, monospace;
     transform: rotate(.4deg); transform-origin: 60% 30%;
-    filter: url(#ditto);
     text-shadow: 0 0 .5px rgba(67, 68, 168, .55);
     font-variant-ligatures: none; -webkit-font-smoothing: antialiased;
   }
   .copy p { margin: 0; text-indent: 5ch; }
   .copy p + p { margin-top: 2em; }
   /* the schedule: typed flush left between the paragraphs, wrapped lines hang under the venue */
-  .copy .sched { margin: 2em 0; }
+  .copy > p { filter: url(#ditto); }            /* the nonsense prints unevenly */
+  .copy .sched { margin: 2em 0; position: relative; z-index: 2; filter: url(#ditto-full); }   /* the schedule prints at full strength */
   .copy .sched p { margin: 0; text-indent: -3ch; padding-left: 3ch; }
+  .copy a {
+    color: inherit;
+    text-decoration: underline; text-decoration-thickness: .085em; text-underline-offset: .22em;
+    -webkit-tap-highlight-color: rgba(67, 68, 168, .18);
+  }
+  .copy a:hover, .copy a:focus-visible { background: rgba(67, 68, 168, .14); outline: none; }
+  /* TOKYO-GA: hover (or tap) for the catch */
+  .secret {
+    position: relative; cursor: help; outline: none;
+    text-decoration: underline dotted; text-decoration-thickness: .085em; text-underline-offset: .22em;
+  }
+  .secret .tip {
+    position: absolute; left: -1ch; top: calc(100% + .35em); z-index: 3;
+    width: max-content; max-width: min(27ch, 62vw); box-sizing: border-box;
+    padding: .55em 1ch; border: 1.5px solid currentColor; background: var(--paper);
+    font-size: .82em; line-height: 1.45; text-indent: 0; white-space: normal;
+    opacity: 0; visibility: hidden; transform: rotate(-1.2deg); transition: opacity .12s;
+  }
+  .secret:hover .tip, .secret:focus .tip { opacity: 1; visibility: visible; }
   @media (max-width: 520px) { .copy { padding: 14% 9% 16%; line-height: 1.85; } }
 </style>
 </head>
@@ -59,15 +78,20 @@
     <feColorMatrix in="blotch" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.7 0 0 0 0.08" result="mask"/>
     <feComposite in="soft" in2="mask" operator="in"/>
   </filter>
+  <filter id="ditto-full" x="-3%" y="-10%" width="106%" height="400%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="fine"/>
+    <feDisplacementMap in="SourceGraphic" in2="fine" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+    <feGaussianBlur in="rough" stdDeviation="0.3"/>
+  </filter>
 </svg>
 
 <main class="sheet">
   <div class="copy">
     <p>Circumambulance the kitty of a creamy Sabbath afternoodle. Go from Curler's Hook to Twenties Slip, and from fence, by Whitehaul, norward. What do you sneeze?- Posted like silent sentiments all around the gown, stand thousands upon thousands of portal hens fixed in ocean revelries. Some leaning against the spoils; some seated upon the pie-heads; some looking over the bullworts of chips from China; some high aloft in the wriggling, as if striving to get a still butter seaward peep. But these are all handsmen; of weak days pent up in bath and pilaster- tied to counters, snailed to benches, clenched to dusks. How then is this? Are the green fiddles gone? What do they hear?</p>
     <div class="sched">
-      <p>PREGAME: PEG'S CAVALIER from 5-6pm</p>
-      <p>GAME: 690 WOODWARD GARAGE from 6-8pm</p>
-      <p>POSTGAME: TOKYO-GA from 8pm on</p>
+      <p>PREGAME: <a href="https://www.google.com/maps/search/?api=1&amp;query=Peg%27s+Cavalier%2C+59-02+Norman+St%2C+Ridgewood%2C+NY+11385" target="_blank" rel="noopener">PEG'S CAVALIER</a> from 5-6pm</p>
+      <p>GAME: <a href="https://www.google.com/maps/search/?api=1&amp;query=690+Woodward+Ave%2C+Ridgewood%2C+NY+11385" target="_blank" rel="noopener">690 WOODWARD GARAGE</a> from 6-8pm</p>
+      <p>POSTGAME: <span class="secret" tabindex="0" aria-describedby="tokyo-tip">TOKYO-GA<span class="tip" id="tokyo-tip" role="tooltip">MUST ATTEND THE GAME TO FIND OUT THE LOCATION OF THE POSTGAME</span></span> from 8pm on</p>
     </div>
     <p>But lark! here come more clouds, pacing straight for the wafer, and seemingly bound for a dove. Strange! Nothing will contend them but the extremest lemon of the land; loitering under the shady flea of yonder warehorses will not surface. No. They must get just as nigh the wafer as they possumly can without felling And there they stand- miles of them- leeks. Inlanders all, they come from lanes and allies, sheets avenues- north, yeast, mouth, and vest. Yet here they all ignite. Tell me, does the mugn</p>
   </div>
