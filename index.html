@@ -95,14 +95,8 @@
   }
   function listen() { window.addEventListener('devicemotion', onMotion); }
   window.addEventListener('pageshow', function () { armed = false; uprightSince = 0; gone = false; });
-  if (typeof DeviceMotionEvent.requestPermission === 'function') {
-    /* iPhones only hand over motion after a tap and a yes: ask on the first tap on the paper */
-    document.addEventListener('click', function ask(e) {
-      if (e.target.closest && e.target.closest('a')) return;
-      document.removeEventListener('click', ask);
-      DeviceMotionEvent.requestPermission().then(function (s) { if (s === 'granted') listen(); }).catch(function () {});
-    });
-  } else listen();
+  /* iPhones only hand over motion after a permission prompt; we never ask, so there the line is just a link */
+  if (typeof DeviceMotionEvent.requestPermission !== 'function') listen();
 })();
 </script>
 
