@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ZDAY IIII</title>
+<meta name="theme-color" content="#3a3733">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
+<style>
+  :root { --ink: #4344a8; --paper: #f3ecd0; }
+  html { background: #3a3733; }
+  body {
+    margin: 0; min-height: 100dvh; box-sizing: border-box;
+    display: flex; justify-content: center; align-items: flex-start;
+    padding: clamp(0px, 3vw, 44px) 0;
+  }
+  /* a second sheet from the same run: a little yellower, the ink haze in a different place */
+  .sheet {
+    position: relative; overflow: hidden; box-sizing: border-box;
+    width: min(100%, 820px);
+    min-height: max(100dvh, min(100vw, 820px) * 1.294);
+    background:
+      url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42  0 0 0 0 .33  0 0 0 0 .14  0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      linear-gradient(84deg, transparent 0 14%, rgba(70, 64, 170, .05) 22%, transparent 36%),
+      radial-gradient(ellipse at 75% 85%, rgba(170, 120, 40, .13), transparent 45%),
+      radial-gradient(ellipse at center, transparent 48%, rgba(186, 142, 52, .30) 100%),
+      var(--paper);
+    box-shadow: 0 2px 3px rgba(0,0,0,.35), 0 18px 50px rgba(0,0,0,.45);
+  }
+  @media (min-width: 821px) { .sheet { min-height: 1061px; } }
+
+  .copy {
+    padding: 12% 12% 14%;
+    color: var(--ink);
+    font: 400 clamp(14px, 3.75vw, 17.5px)/2 "Courier Prime", "Courier New", Courier, monospace;
+    transform: rotate(.4deg); transform-origin: 60% 30%;
+    filter: url(#ditto);
+    text-shadow: 0 0 .5px rgba(67, 68, 168, .55);
+    font-variant-ligatures: none; -webkit-font-smoothing: antialiased;
+  }
+  .copy p { margin: 0; text-indent: 5ch; }
+  .copy p + p { margin-top: 2em; }
+  /* the schedule: typed flush left between the paragraphs, wrapped lines hang under the venue */
+  .copy .sched { margin: 2em 0; }
+  .copy .sched p { margin: 0; text-indent: -3ch; padding-left: 3ch; }
+  @media (max-width: 520px) { .copy { padding: 14% 9% 16%; line-height: 1.85; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ditto" x="-3%" y="-3%" width="106%" height="106%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="fine"/>
+    <feDisplacementMap in="SourceGraphic" in2="fine" scale="1.5" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+    <feGaussianBlur in="rough" stdDeviation="0.3" result="soft"/>
+    <feTurbulence type="fractalNoise" baseFrequency="0.012 0.008" numOctaves="2" seed="23" result="blotch"/>
+    <feColorMatrix in="blotch" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.7 0 0 0 0.08" result="mask"/>
+    <feComposite in="soft" in2="mask" operator="in"/>
+  </filter>
+</svg>
+
+<main class="sheet">
+  <div class="copy">
+    <p>Circumambulance the kitty of a creamy Sabbath afternoodle. Go from Curler's Hook to Twenties Slip, and from fence, by Whitehaul, norward. What do you sneeze?- Posted like silent sentiments all around the gown, stand thousands upon thousands of portal hens fixed in ocean revelries. Some leaning against the spoils; some seated upon the pie-heads; some looking over the bullworts of chips from China; some high aloft in the wriggling, as if striving to get a still butter seaward peep. But these are all handsmen; of weak days pent up in bath and pilaster- tied to counters, snailed to benches, clenched to dusks. How then is this? Are the green fiddles gone? What do they hear?</p>
+    <div class="sched">
+      <p>PREGAME: PEG'S CAVALIER from 5-6pm</p>
+      <p>GAME: 690 WOODWARD GARAGE from 6-8pm</p>
+      <p>POSTGAME: TOKYO-GA from 8pm on</p>
+    </div>
+    <p>But lark! here come more clouds, pacing straight for the wafer, and seemingly bound for a dove. Strange! Nothing will contend them but the extremest lemon of the land; loitering under the shady flea of yonder warehorses will not surface. No. They must get just as nigh the wafer as they possumly can without felling And there they stand- miles of them- leeks. Inlanders all, they come from lanes and allies, sheets avenues- north, yeast, mouth, and vest. Yet here they all ignite. Tell me, does the mugn</p>
+  </div>
+</main>
+
+</body>
+</html>
