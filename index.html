@@ -43,6 +43,7 @@
   }
   .copy p { margin: 0; text-indent: 5ch; }
   .copy p + p { margin-top: 2em; }
+  .copy p.smell { margin-top: 3em; text-indent: 0; }
   .copy a {
     color: inherit; white-space: nowrap;
     text-decoration: underline; text-decoration-thickness: .085em; text-underline-offset: .22em;
@@ -69,8 +70,41 @@
 <main class="sheet">
   <div class="copy">
     <p>Whenever I find myself growing <a href="page2.html">ZDAY IIII</a> about the mouth; whenever it is a dry, desiccated November in my soul; whenever I find myself pausing my tape deck and rewinding past the rear of every <a href="page2.html">ZDAY IIII</a> I meet; and especially whenever my hippos get such an upper hand of me, that it requires a stronger moral principle than I have ever had twice to prevent me from stepping into the street, and scrolling people's Instagram feeds for them- then, I account it high time to go on the George Lamb. There is nothing surprising in this, and even less in the rest of it. More people have been to <a href="page2.html">ZDAY IIII</a> than I have.</p>
+    <p class="smell"><a href="page2.html">Smell the ditto.</a></p>
   </div>
 </main>
+
+<script>
+/* Smell the ditto: lifting the phone up to your face turns the page.
+   Reads the tilt from gravity: the phone has to be seen lying back at a reading angle first,
+   then held nearly upright for a moment. */
+(function () {
+  if (!('DeviceMotionEvent' in window)) return;
+  var armed = false, uprightSince = 0, gone = false;
+  function onMotion(e) {
+    var g = e.accelerationIncludingGravity;
+    if (gone || !g || g.y == null || g.z == null) return;
+    if (Math.abs(g.x) > 6) { uprightSince = 0; return; }           /* sideways: not a sniff */
+    var tilt = Math.atan2(Math.abs(g.y), Math.abs(g.z)) * 180 / Math.PI;   /* 0 = flat, 90 = upright */
+    var now = Date.now();
+    if (tilt < 60) { armed = true; uprightSince = 0; }
+    else if (armed && tilt > 74) {
+      if (!uprightSince) uprightSince = now;
+      else if (now - uprightSince > 350) { gone = true; location.href = 'page2.html'; }
+    } else uprightSince = 0;
+  }
+  function listen() { window.addEventListener('devicemotion', onMotion); }
+  window.addEventListener('pageshow', function () { armed = false; uprightSince = 0; gone = false; });
+  if (typeof DeviceMotionEvent.requestPermission === 'function') {
+    /* iPhones only hand over motion after a tap and a yes: ask on the first tap on the paper */
+    document.addEventListener('click', function ask(e) {
+      if (e.target.closest && e.target.closest('a')) return;
+      document.removeEventListener('click', ask);
+      DeviceMotionEvent.requestPermission().then(function (s) { if (s === 'granted') listen(); }).catch(function () {});
+    });
+  } else listen();
+})();
+</script>
 
 </body>
 </html>
